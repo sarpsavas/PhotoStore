@@ -1,3 +1,10 @@
+using System.Xml.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Persistence.Context;
+using Application.Users.LogIn;
+using Core.Abstractions.Repositories;
+using Infrastructure.Persistence.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +13,63 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+//-eklenenler-----------------------------------------------------------------------------
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ConnContext>(options =>
+    options.UseSqlite(connectionString));
+
+//MediatR
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(LogInQuery).Assembly);
+    
+});
+
+//Repository kaydı 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+//service kaydı
+
+
+//controller kaydı
+
+builder.Services.AddControllers();
+
+//Swagger ekleme
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen();
+
+//-jwt token kaydı, swagger ın içine eklenecek.
+//setup =>
+//{
+//    var jwtSecurityScheme = new OpenApiSecurityScheme
+//    {
+
+//        BearerFormat = "JWT",
+//        Name = "JWT Authentication",
+//        In = ParameterLocation.Header,
+//        Type = SecuritySchemeType.Http,
+//        Scheme = JwtBearerDefaults.AuthenticationScheme,
+//        Description = "Bearer'a gerek yok.",
+
+//        Reference = new OpenApiReference
+//        {
+//            Id = JwtBearerDefaults.AuthenticationScheme,
+//            Type = ReferenceType.SecurityScheme
+//        }
+//    };
+//    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+//    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+//    {
+//        { jwtSecurityScheme, Array.Empty<string>() }
+//    });
+//}
+
+//--------------------------------------------------------------------------
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

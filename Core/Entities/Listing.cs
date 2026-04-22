@@ -13,6 +13,7 @@ namespace Core.Entities
         public string UserName { get; set; }
         public string ListingName { get; set; }
         public string? ListingDescription { get; set; }
+        public string Address { get; set; }
         public Guid QuestionsId { get; set; }
         public DateTime ListingDate { get; set; }
         public string ImageUrl { get; set; }

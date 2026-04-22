@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Core.Abstractions.Repositories
 {
-    public interface IUserRepository
+    public interface ITransactionRepository
     {
-        Task<Guid> GetUserIdByEMailAndPasswordHash(string eMail, string passwordHash);
+        Task<List<Transaction>> GetTransactionsByUserId(Guid userId);
     }
 }

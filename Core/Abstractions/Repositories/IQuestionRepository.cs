@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core.Abstractions.Repositories
 {
-    public interface IUserRepository
+    public interface IQuestionRepository
     {
-        Task<Guid> GetUserIdByEMailAndPasswordHash(string eMail, string passwordHash);
+        Task<List<Question>> GetQuestionByListingId(Guid listingId);
     }
 }
