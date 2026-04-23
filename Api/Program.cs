@@ -1,9 +1,10 @@
-using System.Xml.Serialization;
-using Microsoft.EntityFrameworkCore;
-using Infrastructure.Persistence.Context;
 using Application.Users.LogIn;
 using Core.Abstractions.Repositories;
+using Infrastructure.Persistence.Context;
 using Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using System.Xml.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +83,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
+
+
 app.MapControllers();
+
 
 app.Run();
