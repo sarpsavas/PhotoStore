@@ -28,10 +28,16 @@ namespace Infrastructure.Persistence.Repositories
             return response.UserId;
 
         }
+        public async Task<User> GetUserByUserId(Guid UserId)
+        {
+
+            return null;
+
+        }
 
         public async Task Add(User user)
         {
-
+            await _context.Users.AddAsync(user);
         }
 
         public async Task Update(User user)
@@ -41,7 +47,7 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task Delete(string UserId)
         {
-
+            
         }
 
     }
