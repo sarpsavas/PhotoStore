@@ -17,11 +17,11 @@ namespace Api.Controllers
         }
 
         [HttpPost("user/log-in")]
-        public async Task<IActionResult> LogIn([FromBody] LogInQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<Guid>> LogIn([FromBody] LogInQuery request, CancellationToken cancellationToken)
         {
             try 
             { 
-            
+                
                 return Ok(await _sender.Send(request, cancellationToken));
             }
             catch (Exception ex)
@@ -31,7 +31,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("user/register")]
-        public async Task<IActionResult> Register([FromBody] RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult> Register([FromBody] RegisterCommand request, CancellationToken cancellationToken)
         {
             try
             {

@@ -16,11 +16,13 @@ namespace Application.Users.Register
     {
         private readonly IRepository<User> _repository;
         private readonly IUnitOfWork _unitOfWork;
+        
 
         public RegisterCommandHandler(IRepository<User> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            
         }
 
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -45,8 +47,8 @@ namespace Application.Users.Register
                 Console.WriteLine(Path.GetFullPath("app.db----"));
                 throw new Exception(ex.InnerException?.Message);
             }
-            
             return Unit.Value;
+           
         }
     }
 }
