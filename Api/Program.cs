@@ -1,7 +1,10 @@
 using Application.Users.LogIn;
 using Core.Abstractions.Repositories;
+using Core.Abstractions.UnitOfWork;
+using Core.Entities;
 using Infrastructure.Persistence.Context;
 using Infrastructure.Persistence.Repositories;
+using Infrastructure.Persistence.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -29,6 +32,9 @@ builder.Services.AddMediatR(cfg => {
 //Repository kaydı 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //service kaydı
 

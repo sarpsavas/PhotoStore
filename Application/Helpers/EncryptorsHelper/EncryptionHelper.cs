@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Encryptors
+namespace Application.Helpers.Encryptors
 {
-    public class Encryption
+    public class EncryptionHelper
     {
         public string Encryptor(string text)
         {

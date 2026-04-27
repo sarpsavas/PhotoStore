@@ -1,4 +1,5 @@
 ﻿using Application.Users.LogIn;
+using Application.Users.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,24 @@ namespace Api.Controllers
             
                 return Ok(await _sender.Send(request, cancellationToken));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("user/register")]
+        public async Task<IActionResult> Register([FromBody] RegisterCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _sender.Send(request, cancellationToken);
+                return Ok("successful");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Application.Encryptors;
+﻿using Application.Helpers.Encryptors;
 using Core.Abstractions.Repositories;
 using MediatR;
 using System;
@@ -19,7 +19,7 @@ namespace Application.Users.LogIn
         }
         public async Task<Guid> Handle(LogInQuery request, CancellationToken cancellationToken)
         {
-            Encryption en = new Encryption();
+            EncryptionHelper en = new EncryptionHelper();
             string passwordHash = en.Encryptor(request.Password);
             return await _URepository.GetUserIdByEMailAndPasswordHash(request.EMail, passwordHash);
         }
