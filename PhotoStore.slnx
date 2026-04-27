@@ -8,13 +8,6 @@
   </Folder>
   <Folder Name="/BackEnd/tests/" />
   <Folder Name="/FrontEnd/" />
-  <Folder Name="/FrontEnd/src/">
-    <File Path="../../Notions/sarpsavas.com/index.html" />
-    <File Path="../../Notions/sarpsavas.com/main.js" />
-    <File Path="../../Notions/sarpsavas.com/photography.html" />
-    <File Path="../../Notions/sarpsavas.com/sports.html" />
-    <File Path="../../Notions/sarpsavas.com/style.css" />
-    <File Path="../../Notions/sarpsavas.com/youtube.html" />
-  </Folder>
+  <Folder Name="/FrontEnd/src/" />
   <Folder Name="/FrontEnd/src/img/" />
 </Solution>

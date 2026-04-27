@@ -1,23 +1,18 @@
-﻿using System;
+﻿using Core.Entities;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace Application.Users.Register
 {
-    public class User
+    public record RegisterCommand : IRequest<Unit>
     {
-        public Guid UserId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
-        public string PasswordHash { get; set; }
-
-        public User()
-        {
-            UserId = Guid.NewGuid();
-        }
+        public string Password { get; set; }
     }
-    
 }
