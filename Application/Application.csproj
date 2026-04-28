@@ -15,4 +15,10 @@
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Listings\ViewUserListings\" />
+    <Folder Include="Transactions\" />
+    <Folder Include="Questions\" />
+  </ItemGroup>
+
 </Project>

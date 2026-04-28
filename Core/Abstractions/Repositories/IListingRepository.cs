@@ -11,5 +11,6 @@ namespace Core.Abstractions.Repositories
     {
         Task<List<Listing>> GetListingsByLetters(string letter);
         Task<List<Listing>> GetUserListingsByUserId(Guid userId);
+        Task<List<Listing>> GetTenListing(int page);
     }
 }

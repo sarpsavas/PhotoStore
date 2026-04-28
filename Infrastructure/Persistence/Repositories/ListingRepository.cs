@@ -33,6 +33,21 @@ namespace Infrastructure.Persistence.Repositories
             return response;
         }
 
+        public async Task<List<Listing>> GetTenListing(int page)
+        {
+            
+            string textPage = $"{page}0";
+            int pages = Convert.ToInt16(textPage);
+
+            if (pages < 0 || pages > 98)
+            {
+                throw new Exception("istenilen sayfa sayısı geçersiz.");
+            }
+
+                var response = await _context.Listings.OrderByDescending(x => x.ListingDate).Skip(pages).Take(10).ToListAsync();
+            return response;
+        }
+
         public async Task Add(Listing listing)
         {
             await _context.Listings.AddAsync(listing);
@@ -54,6 +69,7 @@ namespace Infrastructure.Persistence.Repositories
                 response.UserId = listing.UserId;
                 response.UserName = listing.UserName;
                 response.Price = listing.Price;
+                response.Category = listing.Category;
             }
             if (response == null) { throw new Exception("Database response null[ss-01]"); }
         }
