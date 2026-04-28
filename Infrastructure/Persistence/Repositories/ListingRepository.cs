@@ -70,6 +70,7 @@ namespace Infrastructure.Persistence.Repositories
                 response.UserName = listing.UserName;
                 response.Price = listing.Price;
                 response.Category = listing.Category;
+                response.Contact = listing.Contact;
             }
             if (response == null) { throw new Exception("Database response null[ss-01]"); }
         }

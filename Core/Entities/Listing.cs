@@ -18,7 +18,7 @@ namespace Core.Entities
         public DateTime ListingDate { get; set; }
         public List<string> ImageUrls { get; set; }
         public decimal Price { get; set; }
-
+        public string Contact { get; set; }
         public ListingCategories Category { get; set; }
     }
 }
