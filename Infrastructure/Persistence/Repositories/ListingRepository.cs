@@ -43,15 +43,19 @@ namespace Infrastructure.Persistence.Repositories
         {
             var response = await _context.Listings.Where(x => x.ListingId == listing.ListingId).FirstOrDefaultAsync();
 
-            response.ListingName = listing.ListingName;
-            response.ListingId = listing.ListingId;
-            response.ListingDescription = listing.ListingDescription;
-            response.ListingDate = listing.ListingDate;
-            response.Address = listing.Address;
-            response.ImageUrls = listing.ImageUrls;
-            response.UserId = listing.UserId;
-            response.UserName = listing.UserName;
-            response.Price = listing.Price;
+            if (response != null)
+            {
+                response.ListingName = listing.ListingName;
+                response.ListingId = listing.ListingId;
+                response.ListingDescription = listing.ListingDescription;
+                response.ListingDate = listing.ListingDate;
+                response.Address = listing.Address;
+                response.ImageUrls = listing.ImageUrls;
+                response.UserId = listing.UserId;
+                response.UserName = listing.UserName;
+                response.Price = listing.Price;
+            }
+            if (response == null) { throw new Exception("Database response null[ss-01]"); }
         }
         public async Task Delete(Guid userId)
         {

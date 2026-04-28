@@ -11,7 +11,7 @@ namespace Core.Entities
         public Guid QuestionId { get; set; }
         public Guid UserId { get; set; }
         public string QuestionText { get; set; }
-
+        public Guid ListingId { get; set; }
         public string? AnswerText { get; set; }
         public DateTime QuestionDate { get; set; }
         public DateTime AnswerDate { get; set; }
