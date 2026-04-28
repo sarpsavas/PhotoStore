@@ -14,7 +14,7 @@ namespace Core.Entities
         public string LastName { get; set; }
         public string EMail { get; private set; }
         public string PasswordHash { get; set; }
-
+        
         public User()
         {
             UserId = Guid.NewGuid();

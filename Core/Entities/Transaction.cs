@@ -14,5 +14,6 @@ namespace Core.Entities
 
         public TransactionType Type { get; set; }
         public DateTime TransactionTime { get; set; }
+        public string Description { get; set; }
     }
 }

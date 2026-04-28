@@ -30,8 +30,15 @@ namespace Infrastructure.Persistence.Repositories
         }
         public async Task<User> GetUserByUserId(Guid UserId)
         {
-
-            return null;
+            var response = await _context.Users.Where(x => x.UserId == UserId).FirstOrDefaultAsync();
+            if (response == null) { throw new Exception("Database response null[ss-01]"); }
+            User user = new User();
+            user.UserId = response.UserId;
+            user.setEMail(response.EMail);
+            user.Name = response.Name;
+            user.LastName = response.LastName;
+            
+            return user;
 
         }
 
@@ -42,12 +49,24 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task Update(User user)
         {
+            var response = await _context.Users.Where(x => x.UserId == user.UserId).FirstOrDefaultAsync();
 
+            response.UserId = user.UserId;
+            response.Name = user.Name;
+            response.LastName = user.LastName;
+            response.setEMail(user.EMail);
+            response.PasswordHash = user.PasswordHash;
         }
 
-        public async Task Delete(string UserId)
+        public async Task Delete(Guid UserId)
         {
-            
+            var response = await _context.Users.Where(x => x.UserId == UserId).FirstOrDefaultAsync();
+
+            if(response != null)
+            {
+                _context.Users.Remove(response);
+            }
+            if (response == null) { throw new Exception("Database response null[ss-01]"); }
         }
 
     }

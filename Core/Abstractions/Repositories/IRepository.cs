@@ -12,7 +12,7 @@ namespace Core.Abstractions.Repositories
 
         Task Update(T obj);
 
-        Task Delete(string Id);
+        Task Delete(Guid Id);
 
     }
 }

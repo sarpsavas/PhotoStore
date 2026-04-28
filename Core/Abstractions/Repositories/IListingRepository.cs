@@ -10,6 +10,6 @@ namespace Core.Abstractions.Repositories
     public interface IListingRepository
     {
         Task<List<Listing>> GetListingsByLetters(string letter);
-        Task<List<Listing>> GetListingsByUserId(Guid userId);
+        Task<List<Listing>> GetUserListingsByUserId(Guid userId);
     }
 }
