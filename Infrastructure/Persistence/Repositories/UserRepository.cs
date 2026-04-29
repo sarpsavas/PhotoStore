@@ -37,6 +37,7 @@ namespace Infrastructure.Persistence.Repositories
             user.setEMail(response.EMail);
             user.Name = response.Name;
             user.LastName = response.LastName;
+            user.PasswordHash = response.PasswordHash;
             
             return user;
 

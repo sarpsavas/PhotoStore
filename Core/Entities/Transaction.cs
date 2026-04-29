@@ -9,11 +9,11 @@ namespace Core.Entities
 {
     public class Transaction
     {
-        public Guid TransactionId { get; set; }
+        public Guid TransactionId { get; private set; }
         public Guid UserId { get; set; }
-
+        public TransactionSuccess Success { get; set; }
         public TransactionType Type { get; set; }
-        public DateTime TransactionTime { get; set; }
+        public DateTime TransactionTime { get; private set; }
         public string Description { get; set; }
 
         public Transaction()

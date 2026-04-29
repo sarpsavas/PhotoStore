@@ -18,9 +18,10 @@ namespace Application.Listings.ViewUserListings
             _lRepository = lRepository;
         }
 
-        public async Task<List<Listing>> Handle(Guid userId, CancellationToken cancellationToken)
+        public async Task<List<Listing>> Handle(ViewUserListingsQuery request, CancellationToken cancellationToken)
         {
-
+            var response = await _lRepository.GetUserListingsByUserId(request.UserId);
+            return response;
         }
     }
 }

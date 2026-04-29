@@ -16,7 +16,7 @@ namespace Api.Controllers
             _sender = sender;
         }
 
-        [HttpPost("user/log-in")]
+        [HttpGet("user/log-in")]
         public async Task<ActionResult<Guid>> LogIn([FromBody] LogInQuery request, CancellationToken cancellationToken)
         {
             try 

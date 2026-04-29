@@ -31,23 +31,23 @@ namespace Infrastructure.Persistence.Repositories
         }
         public async Task Update(Transaction transaction)
         {
-            var response = await _context.Transactions.Where(x => x.TransactionId == transaction.TransactionId).FirstOrDefaultAsync();
-            response.TransactionId = transaction.TransactionId;
-            response.UserId = transaction.UserId;
-            response.TransactionTime = transaction.TransactionTime;
-            response.Type = transaction.Type;
-            response.Description = transaction.Description;
+            //var response = await _context.Transactions.Where(x => x.TransactionId == transaction.TransactionId).FirstOrDefaultAsync();
+            //response.TransactionId = transaction.TransactionId;
+            //response.UserId = transaction.UserId;
+            //response.TransactionTime = transaction.TransactionTime;
+            //response.Type = transaction.Type;
+            //response.Description = transaction.Description;
         }
         public async Task Delete(Guid transactionId)
         {
-            var response = await _context.Transactions.Where(x => x.TransactionId == transactionId).FirstOrDefaultAsync();
+            //var response = await _context.Transactions.Where(x => x.TransactionId == transactionId).FirstOrDefaultAsync();
             
-            if (response == null) { throw new Exception("Database response null[ss-01]"); }
+            //if (response == null) { throw new Exception("Database response null[ss-01]"); }
 
-            if (response != null)
-            {
-                _context.Transactions.Remove(response);
-            }
+            //if (response != null)
+            //{
+            //    _context.Transactions.Remove(response);
+            //}
         }
     }
 }

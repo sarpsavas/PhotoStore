@@ -65,7 +65,6 @@ namespace Infrastructure.Persistence.Repositories
                 response.ListingDescription = listing.ListingDescription;
                 response.ListingDate = listing.ListingDate;
                 response.Address = listing.Address;
-                response.ImageUrls = listing.ImageUrls;
                 response.UserId = listing.UserId;
                 response.UserName = listing.UserName;
                 response.Price = listing.Price;
