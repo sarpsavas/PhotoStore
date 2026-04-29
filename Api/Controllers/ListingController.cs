@@ -3,6 +3,7 @@ using MediatR;
 using Application.Listings.AddListing;
 using Application.Listings.ViewAllListings;
 using Application.Listings.ViewUserListings;
+using Application.Listings.UpdateListing;
 
 
 namespace Api.Controllers
@@ -32,8 +33,22 @@ namespace Api.Controllers
             }
         }
 
+        [HttpPost("listing/update")]
+        public async Task<ActionResult> UpdateListingAsync([FromBody] UpdateListingCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _sender.Send(request, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+
         [HttpGet("listing/all-listings")]
-        public async Task<ActionResult> GetAllListingAsync([FromBody] ViewAllListingsQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAllListingAsync([FromQuery] ViewAllListingsQuery request, CancellationToken cancellationToken)
         {
             try
             {

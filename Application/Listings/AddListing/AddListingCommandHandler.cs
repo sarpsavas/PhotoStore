@@ -69,12 +69,12 @@ namespace Application.Listings.AddListing
             catch (Exception)
             {
 
-                transaction.Success = TransactionSuccess.Unsuccesful;
+                transaction.Success = TransactionSuccess.Unsuccessful;
                 
             }
             
             await _repositoryTr.Add(transaction);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

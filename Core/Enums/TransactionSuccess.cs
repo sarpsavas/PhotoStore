@@ -9,6 +9,6 @@ namespace Core.Enums
     public enum TransactionSuccess
     {
         Successful,
-        Unsuccesful
+        Unsuccessful
     }
 }

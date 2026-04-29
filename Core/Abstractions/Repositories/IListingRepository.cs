@@ -9,6 +9,7 @@ namespace Core.Abstractions.Repositories
 {
     public interface IListingRepository
     {
+        Task<Listing> GetListingByListingId(Guid listingId);
         Task<List<Listing>> GetListingsByLetters(string letter);
         Task<List<Listing>> GetUserListingsByUserId(Guid userId);
         Task<List<Listing>> GetTenListing(int page);

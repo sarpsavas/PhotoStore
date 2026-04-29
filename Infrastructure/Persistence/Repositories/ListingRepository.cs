@@ -18,7 +18,12 @@ namespace Infrastructure.Persistence.Repositories
         {
             _context = context;
         }
-
+        public async Task<Listing> GetListingByListingId(Guid listingId)
+        {
+            var response = await _context.Listings.Where(x => x.ListingId == listingId).FirstOrDefaultAsync();
+            if (response == null) { throw new Exception("Database response null[ss-01]"); }
+            return response;
+        }
         public async Task<List<Listing>> GetListingsByLetters(string letters)
         {
             var response = await _context.Listings.Where(x => x.UserName.Contains(letters)).ToListAsync();
@@ -61,11 +66,11 @@ namespace Infrastructure.Persistence.Repositories
             if (response != null)
             {
                 response.ListingName = listing.ListingName;
-                response.ListingId = listing.ListingId;
+                
                 response.ListingDescription = listing.ListingDescription;
-                response.ListingDate = listing.ListingDate;
+                
                 response.Address = listing.Address;
-                response.UserId = listing.UserId;
+                
                 response.UserName = listing.UserName;
                 response.Price = listing.Price;
                 response.Category = listing.Category;

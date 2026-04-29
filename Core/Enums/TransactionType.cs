@@ -10,6 +10,7 @@ namespace Core.Enums
     {
         Register,
         AddListing,
+        UpdateListing,
         DeleteListing,
         AddQuestion,
         AddAnswer
