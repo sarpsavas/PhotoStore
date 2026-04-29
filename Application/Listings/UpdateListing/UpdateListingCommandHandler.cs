@@ -17,16 +17,19 @@ namespace Application.Listings.UpdateListing
         private readonly IUserRepository _userRepository;
         private readonly IListingRepository _listingRepository;
         private readonly IUnitOfWork _unit;
+        private readonly IRepository<Transaction> _repositoryTr;
 
         public UpdateListingCommandHandler(IRepository<Listing> repositoryLi,
             IUnitOfWork unit,
             IUserRepository userRepository,
-            IListingRepository listingRepository)
+            IListingRepository listingRepository,
+            IRepository<Transaction> repositoryTr)
         {
             _repositoryLi = repositoryLi;
             _unit = unit;
             _userRepository = userRepository;
             _listingRepository = listingRepository;
+            _repositoryTr = repositoryTr;
         }
 
         public async Task<Unit> Handle(UpdateListingCommand request, CancellationToken cancellationToken)
@@ -59,7 +62,7 @@ namespace Application.Listings.UpdateListing
 
                 transaction.Success = TransactionSuccess.Unsuccessful;
             }
-
+            await _repositoryTr.Add(transaction);
             await _unit.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
