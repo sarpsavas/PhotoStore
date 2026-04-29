@@ -13,7 +13,6 @@ namespace Application.Listings.UpdateListing
         public Guid ListingId { get; set; }
         public string ListingName { get; set; }
         public Guid UserId { get; set; }
-       
 
         public string? ListingDescription { get; set; }
         public string Address { get; set; }
