@@ -13,6 +13,7 @@ namespace Core.Enums
         UpdateListing,
         DeleteListing,
         AddQuestion,
-        AddAnswer
+        AddAnswer,
+        UpdateUser
     }
 }
