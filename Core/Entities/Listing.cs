@@ -23,6 +23,7 @@ namespace Core.Entities
         public Listing()
         {
             this.ListingId = Guid.NewGuid();
+            this.ListingDate = DateTime.UtcNow;
         }
     }
 }

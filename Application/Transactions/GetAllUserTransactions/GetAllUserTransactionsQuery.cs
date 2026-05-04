@@ -1,5 +1,4 @@
-﻿using Application.Responses;
-using Core.Entities;
+﻿using Core.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Listings.ViewUserListings
+namespace Application.Transactions.GetAllUserTransactions
 {
-    public record ViewUserListingsQuery : IRequest<ListingResponse>
+    public record GetAllUserTransactionsQuery : IRequest<List<Transaction>>
     {
         public Guid UserId { get; set; }
     }

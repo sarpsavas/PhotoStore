@@ -19,9 +19,15 @@ namespace Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Question>> GetQuestionByListingId(Guid listingId)
+        public async Task<List<Question>> GetQuestionsByListingId(Guid listingId)
         {
             var response = await _context.Questions.Where(x => x.ListingId == listingId).ToListAsync();
+            if (response == null) { throw new Exception("Database response null[ss-01]"); }
+            return response;
+        }
+        public async Task<Question> GetQuestionByQuestionId(Guid questionId)
+        {
+            var response = await _context.Questions.Where(x => x.QuestionId == questionId).FirstOrDefaultAsync();
             if (response == null) { throw new Exception("Database response null[ss-01]"); }
             return response;
         }

@@ -4,6 +4,7 @@ using Application.Listings.AddListing;
 using Application.Listings.ViewAllListings;
 using Application.Listings.ViewUserListings;
 using Application.Listings.UpdateListing;
+using Application.Listings.AddListingQuestion;
 
 
 namespace Api.Controllers
@@ -61,7 +62,7 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPost("listing/user-listings")]
+        [HttpGet("listing/user-listings")]
         public async Task<ActionResult> GetUserListingAsync([FromBody] ViewUserListingsQuery request, CancellationToken cancellationToken)
         {
             try
@@ -72,6 +73,19 @@ namespace Api.Controllers
             {
 
                 return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("listing/add-question")]
+        public async Task<ActionResult> AddListinQuestion([FromBody] AddListingQuestionCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _sender.Send(request, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
             }
         }
     }

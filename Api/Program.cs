@@ -36,6 +36,7 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 builder.Services.AddScoped<IRepository<Transaction>, TransactionRepository>();
+builder.Services.AddScoped<IRepository<Question>, QuestionRepository>();
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IRepository<Listing>, ListingRepository>();
 builder.Services.AddScoped<IRepository<Image>, ImageRepository>();

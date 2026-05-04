@@ -9,6 +9,7 @@ namespace Core.Abstractions.Repositories
 {
     public interface IQuestionRepository
     {
-        Task<List<Question>> GetQuestionByListingId(Guid listingId);
+        Task<List<Question>> GetQuestionsByListingId(Guid listingId);
+        Task<Question> GetQuestionByQuestionId(Guid questionId);
     }
 }

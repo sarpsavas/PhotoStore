@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Application.Responses;
+using Core.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Listings.ViewAllListings
 {
-    public record ViewAllListingsQuery : IRequest<List<Listing>>
+    public record ViewAllListingsQuery : IRequest<ListingResponse>
     {
         public int page { get; set; }
     }
