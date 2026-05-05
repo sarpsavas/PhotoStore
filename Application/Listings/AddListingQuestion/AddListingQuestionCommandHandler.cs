@@ -40,7 +40,7 @@ namespace Application.Listings.AddListingQuestion
                 Question question = new Question();
                 question.QuestionText = request.QuestionText;
                 question.ListingId = request.ListingId;
-                question.UserId = null;
+                question.UserId = request.UserId;
 
                 await _repositoryQuestion.Add(question);
 
@@ -61,10 +61,6 @@ namespace Application.Listings.AddListingQuestion
 
                 throw new Exception("unsuccessful [add question]");
             }
-            
-
-
-            
             
 
         }

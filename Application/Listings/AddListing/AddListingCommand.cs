@@ -10,7 +10,7 @@ namespace Application.Listings.AddListing
 {
     public record AddListingCommand : IRequest<Unit>
     {
-        public Guid ListingId { get; set; }
+        
         public Guid UserId { get; set; }
         public string ListingName { get; set; }
         public string? ListingDescription { get; set; }

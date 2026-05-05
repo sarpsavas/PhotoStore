@@ -1,5 +1,7 @@
 ﻿using Application.Users.LogIn;
 using Application.Users.Register;
+using Application.Users.UserUpdateEMail;
+using Application.Users.UserUpdateName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +19,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("user/log-in")]
-        public async Task<ActionResult<Guid>> LogIn([FromBody] LogInQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<Guid>> LogIn([FromQuery] LogInQuery request, CancellationToken cancellationToken)
         {
             try 
             { 
@@ -26,7 +28,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException?.Message);
             }
         }
 
@@ -41,7 +43,52 @@ namespace Api.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+
+        [HttpPatch("user/update-email")]
+        public async Task<ActionResult> UpdateEMail([FromBody] UserUpdateEMailCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _sender.Send(request, cancellationToken);
+                return Ok("successful");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+
+        [HttpPatch("user/update-name")]
+        public async Task<ActionResult> UpdateName([FromBody] UserUpdateNameCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _sender.Send(request, cancellationToken);
+                return Ok("successful");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+
+        [HttpPatch("user/update-password")]
+        public async Task<ActionResult> UpdatePassword([FromBody] RegisterCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _sender.Send(request, cancellationToken);
+                return Ok("successful");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
             }
         }
     }

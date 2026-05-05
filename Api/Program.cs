@@ -34,6 +34,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
 builder.Services.AddScoped<IRepository<Transaction>, TransactionRepository>();
 builder.Services.AddScoped<IRepository<Question>, QuestionRepository>();
@@ -44,6 +45,7 @@ builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //service kaydı
+
 
 
 //controller kaydı
@@ -94,7 +96,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     
 }
-
+app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -14,7 +14,7 @@ namespace Core.Entities
         public TransactionSuccess Success { get; set; }
         public TransactionType Type { get; set; }
         public DateTime TransactionTime { get; private set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public Transaction()
         {

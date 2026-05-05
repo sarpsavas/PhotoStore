@@ -11,7 +11,7 @@ namespace Application.Listings.AddListingAnswer
     {
         public Guid QuestionId { get; set; }
         public string? AnswerText { get; set; }
-        public DateTime? AnswerDate { get; set; }
+       
         public Guid UserId { get; set; }
     }
 }
