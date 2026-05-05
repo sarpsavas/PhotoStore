@@ -7,8 +7,9 @@ using Application.Listings.UpdateListing;
 using Application.Listings.AddListingQuestion;
 using Application.Listings.DeleteListing;
 using Application.Listings.AddListingAnswer;
+using Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
-using Application.Listings.AddListingImage;
+
 
 namespace Api.Controllers
 {
@@ -18,11 +19,15 @@ namespace Api.Controllers
     {
         private readonly ISender _sender;
         private readonly IWebHostEnvironment _env;
+        private readonly IAddListingImageService _imageService;
 
-        public ListingController(ISender sender, IWebHostEnvironment env)
+        public ListingController(ISender sender,
+            IWebHostEnvironment env,
+            IAddListingImageService imageService)
         {
             _sender = sender;
             _env = env;
+            _imageService = imageService;
         }
 
         [HttpPost("listing/add")]
@@ -123,7 +128,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("listing/add-image")]
-        public async Task<ActionResult> AddListingImage(IFormFile file, CancellationToken cancellationToken)
+        public async Task<ActionResult> AddListingImage(IFormFile file, string listingId)
         {
             try
             {
@@ -147,7 +152,7 @@ namespace Api.Controllers
 
                 
                 var url = $"/images/{fileName}";
-                await _sender.Send(url, cancellationToken);
+                await _imageService.SaveImage(listingId,url);
 
                 return Ok();
 

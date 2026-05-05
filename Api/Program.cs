@@ -1,5 +1,7 @@
+using Application.Services.AddListingImage;
 using Application.Users.LogIn;
 using Core.Abstractions.Repositories;
+using Core.Abstractions.Services;
 using Core.Abstractions.UnitOfWork;
 using Core.Entities;
 using Infrastructure.Persistence.Context;
@@ -45,7 +47,7 @@ builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //service kaydı
-
+builder.Services.AddScoped<IAddListingImageService, AddListingImageService>();
 
 
 //controller kaydı
