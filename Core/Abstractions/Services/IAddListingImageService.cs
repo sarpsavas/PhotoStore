@@ -8,6 +8,6 @@ namespace Core.Abstractions.Services
 {
     public interface IAddListingImageService
     {
-        Task SaveImage(string listingId, string url);
+        Task SaveImage(string userId, string listingId, string url);
     }
 }

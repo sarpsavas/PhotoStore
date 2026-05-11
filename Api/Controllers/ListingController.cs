@@ -10,6 +10,7 @@ using Application.Listings.AddListingAnswer;
 using Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Application.Listings.GetListingImage;
 
 
 namespace Api.Controllers
@@ -130,7 +131,7 @@ namespace Api.Controllers
         }
         [Authorize]
         [HttpPost("listing/add-image")]
-        public async Task<ActionResult> AddListingImage(IFormFile file, string listingId)
+        public async Task<ActionResult> AddListingImage(IFormFile file, string listingId, string userId)
         {
             try
             {
@@ -154,17 +155,29 @@ namespace Api.Controllers
 
                 
                 var url = $"/images/{fileName}";
-                await _imageService.SaveImage(listingId,url);
+                await _imageService.SaveImage(userId,listingId,url);
 
                 return Ok();
 
             }
             catch (Exception ex)
             {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPatch("listing/get-image")]
+        public async Task<ActionResult> GetListingImage([FromBody] GetListingImageQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _sender.Send(request, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-        //TODO:[HttpGet("listing/add-imgurl")]
 
 
     }

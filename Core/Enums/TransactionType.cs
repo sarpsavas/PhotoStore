@@ -14,6 +14,7 @@ namespace Core.Enums
         DeleteListing,
         AddQuestion,
         AddAnswer,
-        UpdateUser
+        UpdateUser,
+        AddListingImage
     }
 }
