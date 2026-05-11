@@ -1,3 +1,0 @@
-21.04.2026
-Proje oluşturuldu
-  kullanıcı servisleri belirlendi, servislerin authentication ları belirlendi. enetityler belirlendi ve yazıldı.
