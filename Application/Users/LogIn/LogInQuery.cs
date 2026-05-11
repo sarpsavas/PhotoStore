@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Users.LogIn
 {
-    public record LogInQuery : IRequest<Guid>
+    public record LogInQuery : IRequest<LogInResponse>
     {
         
         public string EMail { get; set; }

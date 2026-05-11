@@ -1,4 +1,5 @@
-﻿using Application.Users.UserUpdateEMail;
+﻿using Application.Helpers.Encryptors;
+using Application.Users.UserUpdateEMail;
 using Core.Abstractions.Repositories;
 using Core.Abstractions.UnitOfWork;
 using Core.Entities;
@@ -45,7 +46,9 @@ namespace Application.Users.UserUpdatePassword
                 {
                     throw new Exception("şifre değişimi hatası[mevcut şifre yanlış]");
                 }
-                user.PasswordHash = request.NewPasswordHash;
+                EncryptionHelper enc = new EncryptionHelper();
+
+                user.PasswordHash = enc.Encryptor(request.NewPasswordHash);
 
                 await _repositoryU.Update(user);
 

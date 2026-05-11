@@ -9,6 +9,7 @@ using Application.Listings.DeleteListing;
 using Application.Listings.AddListingAnswer;
 using Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Api.Controllers
@@ -29,7 +30,7 @@ namespace Api.Controllers
             _env = env;
             _imageService = imageService;
         }
-
+        [Authorize]
         [HttpPost("listing/add")]
         public async Task<ActionResult> AddListingAsync([FromBody] AddListingCommand request, CancellationToken cancellationToken )
         {
@@ -43,7 +44,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPatch("listing/update")]
         public async Task<ActionResult> UpdateListingAsync([FromBody] UpdateListingCommand request, CancellationToken cancellationToken)
         {
@@ -57,7 +58,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpDelete("listing/delete")]
         public async Task<ActionResult> DeleteListingAsync([FromBody] DeleteListingCommand request, CancellationToken cancellationToken)
         {
@@ -99,6 +100,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
+        [Authorize]
         [HttpPost("listing/add-question")]
         public async Task<ActionResult> AddListinQuestion([FromBody] AddListingQuestionCommand request, CancellationToken cancellationToken)
         {
@@ -112,7 +114,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPatch("listing/add-answer")]
         public async Task<ActionResult> AddListinAnswer([FromBody] AddListingAnswerCommand request, CancellationToken cancellationToken)
         {
@@ -126,7 +128,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPost("listing/add-image")]
         public async Task<ActionResult> AddListingImage(IFormFile file, string listingId)
         {

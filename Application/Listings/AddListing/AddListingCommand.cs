@@ -15,7 +15,6 @@ namespace Application.Listings.AddListing
         public string ListingName { get; set; }
         public string? ListingDescription { get; set; }
         public string Address { get; set; }
-        public List<string> ImageUrls { get; set; }
         public decimal Price { get; set; }
         public string Contact { get; set; }
         public ListingCategories Category { get; set; }

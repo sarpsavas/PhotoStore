@@ -52,12 +52,6 @@ namespace Application.Listings.AddListing
                 listing.Address = request.Address;
                 listing.ListingDate = DateTime.UtcNow;
 
-
-                foreach (var imgUrl in request.ImageUrls)
-                {
-                    Image image = new Image(listing.ListingId, imgUrl);
-                    await _repositoryIm.Add(image);
-                }
                 listing.Price = request.Price;
                 listing.Contact = request.Contact;
                 listing.Category = request.Category;

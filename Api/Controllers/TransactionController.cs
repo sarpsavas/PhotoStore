@@ -1,6 +1,7 @@
 ﻿using Application.Listings.ViewAllListings;
 using Application.Transactions.GetAllUserTransactions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -14,7 +15,7 @@ namespace Api.Controllers
         {
             _sender = sender;
         }
-
+        [Authorize]
         [HttpGet("transaction/user-transactions")]
         public async Task<ActionResult> GetAllUserTransactionsAsync([FromQuery] GetAllUserTransactionsQuery request, CancellationToken cancellationToken)
         {

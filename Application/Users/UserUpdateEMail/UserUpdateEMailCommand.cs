@@ -11,7 +11,7 @@ namespace Application.Users.UserUpdateEMail
     public record UserUpdateEMailCommand : IRequest<Unit>
     {
         public Guid UserId { get; set; }
-        public string EMail { get; private set; }
+        public string EMail { get; set; }
 
        
     }

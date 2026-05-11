@@ -1,8 +1,11 @@
-﻿using Application.Users.LogIn;
+﻿using Application.Responses;
+using Application.Users.LogIn;
 using Application.Users.Register;
 using Application.Users.UserUpdateEMail;
 using Application.Users.UserUpdateName;
+using Application.Users.UserUpdatePassword;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -19,7 +22,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("user/log-in")]
-        public async Task<ActionResult<Guid>> LogIn([FromQuery] LogInQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<LogInResponse>> LogIn([FromQuery] LogInQuery request, CancellationToken cancellationToken)
         {
             try 
             { 
@@ -46,7 +49,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPatch("user/update-email")]
         public async Task<ActionResult> UpdateEMail([FromBody] UserUpdateEMailCommand request, CancellationToken cancellationToken)
         {
@@ -61,7 +64,7 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPatch("user/update-name")]
         public async Task<ActionResult> UpdateName([FromBody] UserUpdateNameCommand request, CancellationToken cancellationToken)
         {
@@ -76,9 +79,9 @@ namespace Api.Controllers
                 return BadRequest(ex.InnerException?.Message);
             }
         }
-
+        [Authorize]
         [HttpPatch("user/update-password")]
-        public async Task<ActionResult> UpdatePassword([FromBody] RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult> UpdatePassword([FromBody] UserUpdatePasswordCommand request, CancellationToken cancellationToken)
         {
             try
             {

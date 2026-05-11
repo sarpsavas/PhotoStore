@@ -1,3 +1,5 @@
+using Application.Helpers.Authentication;
+using Application.Helpers.TokenGenerator;
 using Application.Services.AddListingImage;
 using Application.Users.LogIn;
 using Core.Abstractions.Repositories;
@@ -7,8 +9,12 @@ using Core.Entities;
 using Infrastructure.Persistence.Context;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Text;
 using System.Xml.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +30,23 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ConnContext>(options =>
     options.UseSqlite(connectionString));
+
+//jwt
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
+});
+    
 
 //MediatR
 builder.Services.AddMediatR(cfg => {
@@ -50,6 +73,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAddListingImageService, AddListingImageService>();
 
 
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<JwtSettings>();
+
+
 //controller kaydı
 
 builder.Services.AddControllers();
@@ -58,36 +85,32 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(setup =>
+{
+    var jwtSecurityScheme = new OpenApiSecurityScheme
+    {
 
+        BearerFormat = "JWT",
+        Name = "JWT Authentication",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "Bearer'a gerek yok.",
 
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 
-//-jwt token kaydı, swagger ın içine eklenecek.
-//setup =>
-//{
-//    var jwtSecurityScheme = new OpenApiSecurityScheme
-//    {
+    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { jwtSecurityScheme, Array.Empty<string>() }
+    });
+});
 
-//        BearerFormat = "JWT",
-//        Name = "JWT Authentication",
-//        In = ParameterLocation.Header,
-//        Type = SecuritySchemeType.Http,
-//        Scheme = JwtBearerDefaults.AuthenticationScheme,
-//        Description = "Bearer'a gerek yok.",
-
-//        Reference = new OpenApiReference
-//        {
-//            Id = JwtBearerDefaults.AuthenticationScheme,
-//            Type = ReferenceType.SecurityScheme
-//        }
-//    };
-//    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-
-//    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-//    {
-//        { jwtSecurityScheme, Array.Empty<string>() }
-//    });
-//}
 
 //--------------------------------------------------------------------------
 var app = builder.Build();
@@ -104,6 +127,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 
