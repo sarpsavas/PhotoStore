@@ -11,6 +11,7 @@ using Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Application.Listings.GetListingImage;
+using Application.Listings.ViewFilterListings;
 
 
 namespace Api.Controllers
@@ -84,6 +85,19 @@ namespace Api.Controllers
             catch (Exception ex)
             {
 
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+
+        [HttpGet("listing/all-filter-listings")]
+        public async Task<ActionResult> GetAllFilterListingsAsync([FromQuery] ViewFilterListingsQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _sender.Send(request, cancellationToken));
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.InnerException?.Message);
             }
         }

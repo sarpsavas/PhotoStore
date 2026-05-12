@@ -1,5 +1,6 @@
 ﻿using Core.Abstractions.Repositories;
 using Core.Entities;
+using Core.Enums;
 using Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -50,6 +51,20 @@ namespace Infrastructure.Persistence.Repositories
             }
 
                 var response = await _context.Listings.OrderByDescending(x => x.ListingDate).Skip(pages).Take(10).ToListAsync();
+            return response;
+        }
+        public async Task<List<Listing>> GetFilterTenListing(int page, ListingCategories category,decimal minValue, decimal maxValue)
+        {
+
+            string textPage = $"{page}0";
+            int pages = Convert.ToInt16(textPage);
+
+            if (pages < 0 || pages > 98)
+            {
+                throw new Exception("istenilen sayfa sayısı geçersiz.");
+            }
+
+            var response = await _context.Listings.OrderByDescending(x => x.ListingDate).Where(s => s.Category == category && s.Price > minValue && s.Price < maxValue).Skip(pages).Take(10).ToListAsync();
             return response;
         }
 
