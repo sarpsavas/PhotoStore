@@ -72,6 +72,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //service kaydı
 builder.Services.AddScoped<IAddListingImageService, AddListingImageService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtSettings>();
@@ -126,6 +136,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
