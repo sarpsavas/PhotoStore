@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhotoStore — Fotoğrafçılık Pazaryeri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo" onclick="navigate('home')">
+        <img src="logo.png" alt="PhotoStore" class="logo-img"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="logo-fallback" style="display:none">Photo<em>Store</em></div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" data-page="home" onclick="navigate('home')">İlanlar</button>
+        <button class="nav-btn" data-page="mylistings" onclick="navigate('mylistings')">İlanlarım</button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Logged in -->
+        <div id="ua-in" style="display:none">
+          <div id="user-chip" class="user-chip"></div>
+          <button class="icon-btn" title="İşlem Geçmişi" onclick="openModal('modal-transactions')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </button>
+          <button class="icon-btn" title="Profil" onclick="openModal('modal-profile')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <button class="btn-primary" onclick="openAddListing()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            İlan Ekle
+          </button>
+          <button class="btn-ghost" onclick="logout()">Çıkış</button>
+        </div>
+        <!-- Guest -->
+        <div id="ua-out">
+          <button class="btn-ghost" onclick="openModal('modal-register')">Kayıt Ol</button>
+          <button class="btn-primary" onclick="openModal('modal-login')">Giriş Yap</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <!-- HOME -->
+    <section id="page-home" class="page active">
+      <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <div class="sidebar-inner">
+            <div class="search-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-input" placeholder="İlan, satıcı, konum..." oninput="filterListings()" />
+            </div>
+
+            <div class="filter-section">
+              <div class="filter-heading">Kategori</div>
+              <div class="filter-tree">
+
+                <button class="filter-parent active" data-cat="0" onclick="setCat(0,this)">
+                  <span class="f-icon">◈</span> Tümü
+                </button>
+
+                <div class="filter-group">
+                  <button class="filter-parent" data-cat="1" onclick="setCat(1,this)">
+                    <svg class="f-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    Kamera
+                  </button>
+                  <div class="filter-children">
+                    <button class="filter-child" data-cat="11" onclick="setCat(11,this)">Dijital Kamera</button>
+                    <button class="filter-child" data-cat="12" onclick="setCat(12,this)">Analog Kamera</button>
+                  </div>
+                </div>
+
+                <div class="filter-group">
+                  <button class="filter-parent" data-cat="2" onclick="setCat(2,this)">
+                    <svg class="f-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                    Objektif
+                  </button>
+                </div>
+
+                <div class="filter-group">
+                  <button class="filter-parent" data-cat="3" onclick="setCat(3,this)">
+                    <svg class="f-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                    Film
+                  </button>
+                  <div class="filter-children">
+                    <button class="filter-child" data-cat="31" onclick="setCat(31,this)">35mm</button>
+                    <button class="filter-child" data-cat="32" onclick="setCat(32,this)">120mm</button>
+                  </div>
+                </div>
+
+                <div class="filter-group">
+                  <button class="filter-parent" data-cat="4" onclick="setCat(4,this)">
+                    <svg class="f-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    Aksesuar
+                  </button>
+                  <div class="filter-children">
+                    <button class="filter-child" data-cat="41" onclick="setCat(41,this)">Tripod</button>
+                    <button class="filter-child" data-cat="42" onclick="setCat(42,this)">Kamera Çantası</button>
+                    <button class="filter-child" data-cat="43" onclick="setCat(43,this)">Hafıza Kartı</button>
+                    <button class="filter-child" data-cat="44" onclick="setCat(44,this)">Batarya &amp; Şarj</button>
+                    <button class="filter-child" data-cat="45" onclick="setCat(45,this)">Flaş &amp; Işık</button>
+                    <button class="filter-child" data-cat="46" onclick="setCat(46,this)">Gimbal &amp; Stabilizer</button>
+                  </div>
+                </div>
+
+                <div class="filter-group">
+                  <button class="filter-parent" data-cat="5" onclick="setCat(5,this)">
+                    <svg class="f-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                    Filtre
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <div class="filter-heading">Fiyat Aralığı</div>
+              <div class="price-range">
+                <input type="number" id="price-min" class="price-input" placeholder="Min ₺" oninput="filterListings()" />
+                <span class="price-sep">—</span>
+                <input type="number" id="price-max" class="price-input" placeholder="Max ₺" oninput="filterListings()" />
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <div class="content-header">
+            <div class="content-header-left">
+              <span id="listing-count" class="listing-count"></span>
+              <span id="active-filter-label" class="active-filter-label" style="display:none"></span>
+            </div>
+            <div class="pagination-controls">
+              <button class="page-btn" id="btn-prev" onclick="changePage(-1)" disabled>←</button>
+              <span id="page-label" class="page-label">1</span>
+              <button class="page-btn" id="btn-next" onclick="changePage(1)">→</button>
+            </div>
+          </div>
+          <div id="listings-grid" class="listings-grid"></div>
+          <div id="listings-empty" class="empty-state" style="display:none">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <p>İlan bulunamadı.</p>
+          </div>
+          <div id="listings-loading" class="loading-state">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MY LISTINGS -->
+    <section id="page-mylistings" class="page">
+      <div class="inner-page">
+        <div class="page-header">
+          <h2 class="page-title">İlanlarım</h2>
+          <button class="btn-primary" onclick="openAddListing()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Yeni İlan
+          </button>
+        </div>
+        <div id="my-listings-list" class="my-listings-list"></div>
+        <div id="my-listings-empty" class="empty-state" style="display:none">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <p>Henüz ilan eklemediniz.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════ MODALS ═══════════════════ -->
+
+  <!-- LISTING DETAIL -->
+  <div id="modal-detail" class="modal-overlay" onclick="closeModalOverlay(event,'modal-detail')">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3 id="detail-title" class="modal-title">—</h3>
+        <button class="modal-close" onclick="closeModal('modal-detail')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Image gallery -->
+        <div id="detail-gallery" class="detail-gallery">
+          <div id="detail-gallery-inner" class="detail-gallery-inner"></div>
+          <!-- Upload button shown only to owner -->
+          <div id="detail-img-upload-wrap" style="display:none" class="img-upload-wrap">
+            <label class="img-upload-label" for="detail-img-file">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Fotoğraf Ekle
+            </label>
+            <input type="file" id="detail-img-file" accept="image/*" style="display:none" onchange="uploadImage(this)" />
+          </div>
+        </div>
+
+        <div id="detail-meta" class="detail-meta"></div>
+        <div id="detail-stats" class="detail-stats"></div>
+
+        <div id="detail-desc-wrap" class="detail-section" style="display:none">
+          <div class="section-label">Açıklama</div>
+          <p id="detail-desc" class="detail-desc-text"></p>
+        </div>
+
+        <div class="detail-section">
+          <div class="section-label">Sorular <span id="detail-q-count" class="q-count-badge" style="display:none"></span></div>
+          <div id="detail-questions" class="questions-list"></div>
+          <div id="ask-question-wrap" style="display:none" class="ask-wrap">
+            <input type="text" id="question-input" class="input" placeholder="Soru sor..." onkeydown="if(event.key==='Enter')submitQuestion()" />
+            <button class="btn-primary" onclick="submitQuestion()">Gönder</button>
+          </div>
+          <p id="ask-question-hint" class="hint-text" style="display:none">Soru sormak için giriş yapın.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="modal-login" class="modal-overlay" onclick="closeModalOverlay(event,'modal-login')">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Giriş Yap</h3>
+        <button class="modal-close" onclick="closeModal('modal-login')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label class="label">E-posta</label><input type="email" id="login-email" class="input" /></div>
+        <div class="form-group"><label class="label">Şifre</label><input type="password" id="login-pass" class="input" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+        <button class="btn-primary full-width" onclick="doLogin()">Giriş Yap</button>
+        <p class="modal-switch-hint">Hesabınız yok mu? <a href="#" onclick="closeModal('modal-login');openModal('modal-register');return false">Kayıt Ol</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="modal-register" class="modal-overlay" onclick="closeModalOverlay(event,'modal-register')">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Kayıt Ol</h3>
+        <button class="modal-close" onclick="closeModal('modal-register')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group"><label class="label">Ad</label><input type="text" id="reg-name" class="input" /></div>
+          <div class="form-group"><label class="label">Soyad</label><input type="text" id="reg-lastname" class="input" /></div>
+        </div>
+        <div class="form-group"><label class="label">E-posta</label><input type="email" id="reg-email" class="input" /></div>
+        <div class="form-group"><label class="label">Şifre</label><input type="password" id="reg-pass" class="input" /></div>
+        <button class="btn-primary full-width" onclick="doRegister()">Kayıt Ol</button>
+        <p class="modal-switch-hint">Hesabınız var mı? <a href="#" onclick="closeModal('modal-register');openModal('modal-login');return false">Giriş Yap</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT LISTING -->
+  <div id="modal-add-listing" class="modal-overlay" onclick="closeModalOverlay(event,'modal-add-listing')">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="listing-form-title">İlan Ekle</h3>
+        <button class="modal-close" onclick="closeModal('modal-add-listing')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="form-listing-id" />
+        <div class="form-group"><label class="label">Başlık</label><input type="text" id="form-name" class="input" /></div>
+        <div class="form-group"><label class="label">Açıklama</label><textarea id="form-desc" class="input" rows="3"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="label">Adres</label><input type="text" id="form-address" class="input" /></div>
+          <div class="form-group"><label class="label">İletişim</label><input type="text" id="form-contact" class="input" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="label">Fiyat (₺)</label><input type="number" id="form-price" class="input" /></div>
+          <div class="form-group">
+            <label class="label">Kategori</label>
+            <select id="form-category" class="input select-input">
+              <optgroup label="─ Kamera">
+                <option value="1">Kamera (Genel)</option>
+                <option value="11">Dijital Kamera</option>
+                <option value="12">Analog Kamera</option>
+              </optgroup>
+              <optgroup label="─ Objektif"><option value="2">Objektif</option></optgroup>
+              <optgroup label="─ Film">
+                <option value="3">Film (Genel)</option>
+                <option value="31">35mm Film</option>
+                <option value="32">120mm Film</option>
+              </optgroup>
+              <optgroup label="─ Aksesuar">
+                <option value="4">Aksesuar (Genel)</option>
+                <option value="41">Tripod</option>
+                <option value="42">Kamera Çantası</option>
+                <option value="43">Hafıza Kartı</option>
+                <option value="44">Batarya &amp; Şarj</option>
+                <option value="45">Flaş &amp; Işık</option>
+                <option value="46">Gimbal &amp; Stabilizer</option>
+              </optgroup>
+              <optgroup label="─ Filtre"><option value="5">Filtre</option></optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-ghost-light" onclick="closeModal('modal-add-listing')">İptal</button>
+          <button class="btn-primary" onclick="submitListing()">Kaydet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="modal-profile" class="modal-overlay" onclick="closeModalOverlay(event,'modal-profile')">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Profil</h3>
+        <button class="modal-close" onclick="closeModal('modal-profile')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab(this,'tab-name')">İsim</button>
+          <button class="tab-btn" onclick="switchTab(this,'tab-email')">E-posta</button>
+          <button class="tab-btn" onclick="switchTab(this,'tab-pass')">Şifre</button>
+        </div>
+        <div id="tab-name" class="tab-content active">
+          <div class="form-row">
+            <div class="form-group"><label class="label">Ad</label><input type="text" id="prof-name" class="input" /></div>
+            <div class="form-group"><label class="label">Soyad</label><input type="text" id="prof-lastname" class="input" /></div>
+          </div>
+          <button class="btn-primary" onclick="updateName()">Güncelle</button>
+        </div>
+        <div id="tab-email" class="tab-content">
+          <div class="form-group"><label class="label">Yeni E-posta</label><input type="email" id="prof-email" class="input" /></div>
+          <button class="btn-primary" onclick="updateEmail()">Güncelle</button>
+        </div>
+        <div id="tab-pass" class="tab-content">
+          <div class="form-group"><label class="label">Eski Şifre</label><input type="password" id="prof-old-pass" class="input" /></div>
+          <div class="form-group"><label class="label">Yeni Şifre</label><input type="password" id="prof-new-pass" class="input" /></div>
+          <button class="btn-primary" onclick="updatePass()">Güncelle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSACTIONS -->
+  <div id="modal-transactions" class="modal-overlay" onclick="closeModalOverlay(event,'modal-transactions')">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3 class="modal-title">İşlem Geçmişi</h3>
+        <button class="modal-close" onclick="closeModal('modal-transactions')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="transactions-list" class="transactions-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="app.js"></script>
+</body>
+</html>
