@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Application.Listings.GetListingImage;
 using Application.Listings.ViewFilterListings;
+using Application.Listings.GetListingsByLetters;
 
 
 namespace Api.Controllers
@@ -104,6 +105,19 @@ namespace Api.Controllers
 
         [HttpGet("listing/user-listings")]
         public async Task<ActionResult> GetUserListingAsync([FromQuery] ViewUserListingsQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _sender.Send(request, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+        [HttpGet("listing/all-listings-by-letters")]
+        public async Task<ActionResult> GetAllListingByLettersAsync([FromQuery] GetListingsByLettersQuery request, CancellationToken cancellationToken)
         {
             try
             {
