@@ -185,7 +185,7 @@ namespace Api.Controllers
                 var url = $"/images/{fileName}";
                 await _imageService.SaveImage(userId,listingId,url);
 
-                return Ok();
+                return Ok(new { url });
 
             }
             catch (Exception ex)
