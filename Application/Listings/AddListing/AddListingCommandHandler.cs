@@ -59,17 +59,21 @@ namespace Application.Listings.AddListing
                 await _repositoryL.Add(listing);
 
                 transaction.Success = TransactionSuccess.Successful;
+
+                await _repositoryTr.Add(transaction);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
             }
             catch (Exception)
             {
-
                 transaction.Success = TransactionSuccess.Unsuccessful;
-                
+                await _repositoryTr.Add(transaction);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
             }
+
             
-            await _repositoryTr.Add(transaction);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
+            
         }
     }
 }
